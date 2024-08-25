@@ -5,14 +5,15 @@ let form              = document.getElementById("mortage_repayement_form");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    remove_error_nodes();
 
     let repayement_result = document.getElementById("repayement-result");
     let repay_over_result = document.getElementById("repay-over-result");
 
-    let invalid_fields = get_invalid_fields();
+    let invalid_field_ids = get_invalid_field_ids();
 
 
-    if (invalid_fields.length == 0) {
+    if (invalid_field_ids.length == 0) {
 
         let mortage = map_mortage_to_form(form);
         let monthlyPayment = mortage.calculateMonthlyPayment();
@@ -31,10 +32,45 @@ form.addEventListener("submit", (e) => {
         return;
     }
 
+    show_error_indicators(invalid_field_ids);
     display_empty_result();
 
     console.log(typeof (form.amount.value))
 })
+
+function remove_error_nodes() {
+    let error_nodes = document.querySelectorAll('.error_node');
+    if(error_nodes) {
+        error_nodes.forEach(error_node => {
+            console.log(error_node.parentNode.children.item(1).classList.remove("error"))
+            error_node.remove();
+        });
+    }
+}
+
+function show_error_indicators(invalid_field_ids) {
+    invalid_field_ids.forEach(field_id => {
+        let input_group = null;
+        let temporary_field = document.getElementById(field_id);
+
+        if(field_id === "mortage_type") {
+            input_group = temporary_field;
+        } else {
+            input_group = temporary_field.parentNode.parentNode;
+            temporary_field.parentNode.classList.add('error'); 
+        }
+
+        add_error_element(input_group);
+    });
+}
+
+function add_error_element (input_group) {
+    let error_node = document.createElement('p');
+
+    error_node.classList.add("error_node");
+    error_node.innerHTML = "This field is required";
+    input_group.appendChild(error_node);
+}
 
 function display_completed_result() {
     empty_result.style.display     = "none";
@@ -46,7 +82,7 @@ function display_empty_result() {
     completed_result.style.display = "none";
 }
 
-function get_invalid_fields() {
+function get_invalid_field_ids() {
 
     let invalid_inputs = [];
 
