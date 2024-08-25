@@ -3,6 +3,14 @@ let empty_result = document.getElementById("empty-result");
 let completed_result = document.getElementById("completed-results");
 let form = document.getElementById("mortage_repayement_form");
 
+
+document.getElementById("reset").addEventListener('click', (e) => {
+    e.preventDefault();
+
+    remove_error_nodes();
+    form.reset();
+})
+
 let amount_input = form.amount;
 amount_input.addEventListener('input', (e) => {
 
