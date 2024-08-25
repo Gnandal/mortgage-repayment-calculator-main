@@ -1,0 +1,288 @@
+:root {
+    --color-lime-hover: hsl(61, 80%, 80%);
+    --color-lime      : hsl(61, 70%, 52%);
+    --color-red       : hsl(4, 69%, 50%);
+    --color-white     : hsl(0, 0%, 100%);
+    --color-slate-100 : hsl(202, 86%, 94%);
+    --color-slate-300 : hsl(203, 41%, 72%);
+    --color-slate-500 : hsl(200, 26%, 54%);
+    --color-slate-700 : hsl(200, 24%, 40%);
+    --color-slate-900 : hsl(202, 55%, 16%);
+}
+
+body {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    max-width: 1440px;
+    margin: auto;
+    padding: 0;
+
+    background-color: var(--color-slate-900);
+    accent-color: var(--color-slate-300);
+}
+
+main {
+    background-color: var(--color-white);
+}
+
+#result {
+    background-color: var(--color-slate-900);
+    color: var(--color-slate-300);
+}
+
+#result h2 {
+    color: var(--color-white);
+    font-weight: 700;
+}
+
+section, form {
+    padding: 1.5rem;
+}
+
+#empty-result {
+    text-align: center;
+    margin: 20px;
+    line-height: 1.5rem;
+}
+
+#mortage_repayement_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+
+.input-group>div:nth-child(-n+3) {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-top: .4rem;
+    border: 1.5px solid var(--color-slate-300);
+    background-color: var(--color-slate-100);
+    color: var(--color-slate-900);
+    border-radius: 5px;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#mortage_repayement_form .input-group span {
+    padding: 0px 1rem;
+}
+
+input[type="number"] {
+    font-size: 18px;
+    width: 100%;
+    height: 40px;
+    border: none;
+
+    padding: .2rem .5rem;
+}
+
+input {
+    cursor: pointer;
+}
+
+.rounded-borders-left {
+    border-end-start-radius: 10px;
+    border-start-start-radius: 10px;
+}
+
+.rounded-borders-right {
+    border-start-end-radius: 10px;
+    border-end-end-radius: 10px;
+}
+
+#mortage_repayement_form label, a {
+    color: var(--color-slate-700) !important;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge */
+    margin: 0; /* Prevents margin issues in some browsers */
+}
+
+button {
+    color: var(--color-slate-900);
+    font-weight: bold;
+    font-size: 1.15rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    height: 45px;
+    
+    background-color: var(--color-lime);
+    border: none;
+    border-radius: 25px;
+}
+
+button:hover {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-slate-900);
+    transform: scale(1.01);
+}
+
+#mortage_repayement_form .input-group input[type="number"]:focus-visible{
+    outline: none;
+    border: none;
+}
+
+#mortage_repayement_form div.input-group:nth-child(-n+3) div:focus-within {
+    background-color: var(--color-lime);
+    border: 1px solid var(--color-lime);
+}
+
+#completed-results {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5rem;
+}
+
+#wrapper {
+    background-color: hsl(200, 65%, 5%);
+    padding: 1rem;
+    margin-top: .35rem;
+    margin-bottom: -1px;
+    border-radius: 1rem;
+}
+
+#wrapper .result-amount {
+    font-weight: bolder;
+}
+
+#wrapper div {
+    padding: 6px 0;
+}
+
+#repayement-result {
+    font-size: 2.5rem;
+    color: var(--color-lime);
+}
+
+#repay-over-result {
+    font-size: 1.5rem;
+    color: var(--color-white);
+}
+
+#completed-results>div:last-child {
+    background-color: var(--color-lime);
+    margin-top: 1rem;
+    border-radius: 1.4rem;
+}
+
+.row {
+    display: grid;
+    gap: 1.4rem;
+}
+
+
+#mortage_type>div {
+    background-color: var(--color-white);
+    padding: 1rem !important;
+}
+
+#mortage_type>div:has(input[type="radio"]:checked) {
+    background-color: var(--color-lime-hover) !important;
+    border-color: var(--color-lime);
+}
+
+input[type=radio] {
+    transform: scale(1.2);
+
+}
+
+input[type=radio]:checked {
+  accent-color: var(--color-lime);
+
+  border: 0.2rem solid var(--color-lime);
+  background-color: var(--color-lime);
+  border-radius: 50%;
+}
+
+
+@media only screen and (min-width: 600px) {
+    .form-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form-top>div {
+        text-align: end;
+    }
+
+    input[type="text"] , input[type="number"] {
+        height: 45px;
+    }
+
+    .row {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    body {
+        background-color: var(--color-slate-100);
+    }
+    
+    main {
+        border-radius: 1.5rem;      
+        margin: 3rem;  
+    }
+
+    #result {
+        border-radius: 0 0 1.5rem 1.5rem;
+    }   
+
+    section, form {
+        padding: 3rem;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    body {
+        height: 100vh;
+        width: 100vh;
+    }
+
+    #mortage_repayement_form { 
+        gap: 2rem;
+    }
+
+    main {
+        display: flex;
+        justify-self: center;
+ 
+        transform: translateY(-50%);
+        margin-top: 50%;
+    }
+
+    #mortage_repayement_form {
+        width: 50%;
+    }
+
+    #result {
+        width: 50%;
+        border-radius: 1.5rem;
+        border-end-start-radius: 5rem;
+    }
+
+    #completed-results {
+        gap: 2rem;
+    }
+
+    #empty-result {
+        transform: translateY(-50%);
+        margin-top: 50%;
+    }
+
+    #wrapper div {
+        padding: 1rem 0;
+    }
+}
+
