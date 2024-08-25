@@ -1,7 +1,24 @@
 
-let empty_result      = document.getElementById("empty-result");
-let completed_result  = document.getElementById("completed-results");
-let form              = document.getElementById("mortage_repayement_form");
+let empty_result = document.getElementById("empty-result");
+let completed_result = document.getElementById("completed-results");
+let form = document.getElementById("mortage_repayement_form");
+
+let amount_input = form.amount;
+amount_input.addEventListener('input', (e) => {
+
+    let amoun_input_value = amount_input.value.replace(/\s+/g, '');
+    console.log(amoun_input_value)
+    let numeric_value = parseFloat(amoun_input_value.replaceAll(',', ''));
+    console.log(numeric_value)
+
+    if (!isNaN(numeric_value)) {
+        formatted_value = numeric_value.toLocaleString('en-US');
+        amount_input.value = amoun_input_value.charAt(amoun_input_value.length - 1) === '.' ? formatted_value + '.' : formatted_value;
+    } else {
+        amount_input.value = '';
+    }
+
+})
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -40,7 +57,7 @@ form.addEventListener("submit", (e) => {
 
 function remove_error_nodes() {
     let error_nodes = document.querySelectorAll('.error_node');
-    if(error_nodes) {
+    if (error_nodes) {
         error_nodes.forEach(error_node => {
             console.log(error_node.parentNode.children.item(1).classList.remove("error"))
             error_node.remove();
@@ -53,18 +70,18 @@ function show_error_indicators(invalid_field_ids) {
         let input_group = null;
         let temporary_field = document.getElementById(field_id);
 
-        if(field_id === "mortage_type") {
+        if (field_id === "mortage_type") {
             input_group = temporary_field;
         } else {
             input_group = temporary_field.parentNode.parentNode;
-            temporary_field.parentNode.classList.add('error'); 
+            temporary_field.parentNode.classList.add('error');
         }
 
         add_error_element(input_group);
     });
 }
 
-function add_error_element (input_group) {
+function add_error_element(input_group) {
     let error_node = document.createElement('p');
 
     error_node.classList.add("error_node");
@@ -73,12 +90,12 @@ function add_error_element (input_group) {
 }
 
 function display_completed_result() {
-    empty_result.style.display     = "none";
+    empty_result.style.display = "none";
     completed_result.style.display = "flex";
 }
 
 function display_empty_result() {
-    empty_result.style.display     = "block";
+    empty_result.style.display = "block";
     completed_result.style.display = "none";
 }
 
@@ -103,7 +120,7 @@ function get_invalid_field_ids() {
 function map_mortage_to_form() {
 
     return new Mortgage(
-        Number(form.amount.value),
+        Number(form.amount.value.replace(',', '')),
         Number(form.interest_rate.value),
         Number(form.term_duration.value),
         form.mortage_type.value
@@ -113,37 +130,33 @@ function map_mortage_to_form() {
 
 class Mortgage {
     constructor(amount, interestRate, term_duration, mortage_type) {
-        this.amount = amount; // Principal loan amount
-        this.interestRate = interestRate; // Annual interest rate in percentage
-        this.term_duration = term_duration; // Term of the loan in term_duration
-        this.mortage_type = mortage_type; // mortage_type of mortgage: 'repayment' or 'interest-only'
+        this.amount = amount;
+        this.interestRate = interestRate;
+        this.term_duration = term_duration;
+        this.mortage_type = mortage_type;
     }
 
-    // Calculate the monthly interest rate
     get monthlyInterestRate() {
         return this.interestRate / 100 / 12;
     }
 
-    // Calculate the number of payments over the entire term of the loan
     get totalPayments() {
         return this.term_duration * 12;
     }
 
-    // Calculate monthly payment for repayment mortgage
     calculateRepayment() {
         const r = this.monthlyInterestRate;
         const n = this.totalPayments;
         const P = this.amount;
 
         if (r === 0) {
-            return P / n; // No interest scenario
+            return P / n;
         }
 
         const monthlyPayment = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
         return monthlyPayment;
     }
 
-    // Calculate monthly payment for interest-only mortgage
     calculateInterestOnly() {
         const r = this.monthlyInterestRate;
         const P = this.amount;
@@ -152,7 +165,6 @@ class Mortgage {
         return monthlyPayment;
     }
 
-    // Calculate the monthly payment based on the mortage_type of mortgage
     calculateMonthlyPayment() {
         if (this.mortage_type === 'repayment') {
             return this.calculateRepayment();
@@ -163,11 +175,3 @@ class Mortgage {
         }
     }
 }
-
-// Example usage:
-
-const repaymentMortgage = new Mortgage(200000, 5, 20, 'repayment');
-console.log(`Repayment Mortgage Monthly Payment: €${repaymentMortgage.calculateMonthlyPayment().toFixed(2)}`);
-
-const interestOnlyMortgage = new Mortgage(200000, 5, 20, 'interest-only');
-console.log(`Interest-Only Mortgage Monthly Payment: €${interestOnlyMortgage.calculateMonthlyPayment().toFixed(2)}`);
